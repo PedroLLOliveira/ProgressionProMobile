@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-    View, 
-    Text, 
+    View,
     Alert,
-    FlatList,
     StyleSheet,
-    TouchableOpacity
   } from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import UIFlatlist from './UIFlatList';
+import UISectionAddButton from './UISectionAddButton';
+import UIWorkoutCard from './UIWorkoutCard';
 
 const WorkoutScreen = ({ navigation }) => {
   const [workouts, setWorkouts] = useState('');
@@ -16,34 +16,34 @@ const WorkoutScreen = ({ navigation }) => {
     navigation.navigate('AddWorkoutScreen')
   }
 
-  const WorkoutItem = ({ title }) => (
-    <View style={styles.card}>
-      <Text style={styles.cardText}>{title}</Text>
-    </View>
-  );
+  const fetchWorkoutsData = async () => {
+    try {
+      const workoutsResponse = await AsyncStorage.getItem("workouts");
+
+      if (workoutsResponse) {
+        const workoutsObject = JSON.parse(workoutsResponse);;
+        setWorkouts(workoutsObject); 
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível carregar os treinos do usuário.");
+    }
+  };
+
+  useEffect(() => {
+    fetchWorkoutsData()
+  }, [])
 
   return (
     <View style={styles.screen}>
-      <View style={styles.container}>
-        <TouchableOpacity onPress={handleAddWorkouts}>
-          <AntDesign  
-            name="pluscircle" 
-            size={24} 
-            // color="#3498db"
-            color='blue'
-          />
-        </TouchableOpacity>
-      </View>
-      { workouts ? (
-        <FlatList
-        data={workouts}
-        renderItem={({ item }) => <WorkoutItem title={item.explicacao} />}
-        keyExtractor={item => item.id.toString()}
-        contentContainerStyle={styles.listContainer}
+      <UISectionAddButton
+        addFunction={handleAddWorkouts}
       />
-      ) : (
-        <Text style={styles.noMeasurementText}>Nenhum treino cadastrado.</Text>
-      ) }
+      <UIFlatlist
+        itens={workouts}
+        notFoundLabel='Nenhum treino cadastrado.'
+        identifyKey='id'
+        RenderCardComponent={UIWorkoutCard}
+      />
     </View>
   );
 };
@@ -61,30 +61,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     elevation: 5,
-  },
-  listContainer: {
-    paddingHorizontal: 20,
-  },
-  card: {
-    backgroundColor: '#fff',
-    padding: 15,
-    marginVertical: 10,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  cardText: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#2c3e50',
-  },
-  noMeasurementText: {
-    fontSize: 16,
-    color: 'gray',
-    textAlign: 'center',
   },
 });
 

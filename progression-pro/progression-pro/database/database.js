@@ -285,4 +285,5 @@ export const initializeDatabase = async () => {
   await createMovementsTable();
   await createWorkoutsTable();
   await createWorkoutMovementsTable();
+  // await insertWorkout(1, 'Treino de peito')
 };
