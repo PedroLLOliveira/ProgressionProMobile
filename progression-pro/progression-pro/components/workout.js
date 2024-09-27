@@ -1,80 +1,89 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { authenticateUser } from '../database/database'; 
+import { 
+    View, 
+    Text, 
+    Alert,
+    FlatList,
+    StyleSheet,
+    TouchableOpacity
+  } from 'react-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const WorkoutScreen = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [workouts, setWorkouts] = useState('');
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos.');
-      return;
-    }
+  const handleAddWorkouts = () => {
+    navigation.navigate('AddWorkoutScreen')
+  }
 
-    authenticateUser(
-      email,
-      password,
-      (user) => {
-        Alert.alert('Sucesso', `Bem-vindo(a), ${user.nome}!`);
-        navigation.replace('MainTabs'); // Navega para as abas principais
-      },
-      () => {
-        Alert.alert('Erro', 'E-mail ou senha incorretos.');
-      }
-    );
-  };
+  const WorkoutItem = ({ title }) => (
+    <View style={styles.card}>
+      <Text style={styles.cardText}>{title}</Text>
+    </View>
+  );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
+    <View style={styles.screen}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={handleAddWorkouts}>
+          <AntDesign  
+            name="pluscircle" 
+            size={24} 
+            // color="#3498db"
+            color='blue'
+          />
+        </TouchableOpacity>
+      </View>
+      { workouts ? (
+        <FlatList
+        data={workouts}
+        renderItem={({ item }) => <WorkoutItem title={item.explicacao} />}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={styles.listContainer}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Entrar" onPress={handleLogin} />
-      <Text style={styles.link} onPress={() => navigation.navigate('Register')}>
-        Não tem uma conta? Registre-se
-      </Text>
+      ) : (
+        <Text style={styles.noMeasurementText}>Nenhum treino cadastrado.</Text>
+      ) }
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 30,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f7f9fc',
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  container: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    backgroundColor: '#fff',
     marginBottom: 20,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    elevation: 5,
   },
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 15,
+  listContainer: {
+    paddingHorizontal: 20,
   },
-  link: {
-    marginTop: 10,
-    color: 'blue',
+  card: {
+    backgroundColor: '#fff',
+    padding: 15,
+    marginVertical: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  cardText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#2c3e50',
+  },
+  noMeasurementText: {
+    fontSize: 16,
+    color: 'gray',
     textAlign: 'center',
   },
 });

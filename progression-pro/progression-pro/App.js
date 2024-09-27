@@ -10,6 +10,7 @@ import RegisterScreen from './components/register';
 import HomeScreen from './components/home';
 import WorkoutScreen from './components/workout';
 import AddMeasurementScreen from './components/addMeasurement';
+import AddWorkoutScreen from './components/addWorkout'
 import { initializeDatabase } from './database/database'; 
 
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,7 @@ export default function App() {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="MainTabs" component={MainTabs} />
         <Stack.Screen name="AddMeasurement" component={AddMeasurementScreen} />
+        <Stack.Screen name="AddWorkoutScreen" component={AddWorkoutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
