@@ -43,8 +43,8 @@ const AddMeasurementScreen = ({ route, navigation }) => {
   const [antebraco_esquerdo, setAntebracoEsquerdo] = useState("");
   const [biceps_relaxado_direito, setBracoRelaxadoDireito] = useState("");
   const [biceps_relaxado_esquerdo, setBracoRelaxadoEsquerdo] = useState("");
-  const [biceps_contraido_direito, setBracoCOntraidoDireito] = useState("");
-  const [biceps_contraido_esquerdo, setBracoCOntraidoEsquerdo] = useState("");
+  const [biceps_contraido_direito, setBracoContraidoDireito] = useState("");
+  const [biceps_contraido_esquerdo, setBracoContraidoEsquerdo] = useState("");
   const [coxa_proximal_direita, setCoxaProximalDireita] = useState("");
   const [coxa_proximal_esquerda, setCoxaProximalEsquerda] = useState("");
   const [coxa_medial_direita, setCoxaMedialDireita] = useState("");
@@ -532,16 +532,16 @@ const AddMeasurementScreen = ({ route, navigation }) => {
                 value={biceps_contraido_esquerdo}
                 keyboardType="decimal-pad"
                 onChangeText={(text) => {
-                  setBracoCOntraidoEsquerdo(text);
+                  setBracoContraidoEsquerdo(text);
                 }}
               />
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
-                value={biceps_contraido_esquerdo}
+                value={biceps_contraido_direito}
                 keyboardType="decimal-pad"
                 onChangeText={(text) => {
-                  setBracoCOntraidoDireito(text);
+                  setBracoContraidoDireito(text);
                 }}
               />
             </View>
@@ -720,6 +720,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
           </View>
         </View>
       )}
+
     </ScrollView>
   );
 };
