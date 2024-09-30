@@ -12,7 +12,7 @@ import UIWorkoutCard from './UIWorkoutCard';
 const WorkoutScreen = ({ navigation }) => {
   const [workouts, setWorkouts] = useState('');
 
-  const handleAddWorkouts = () => {
+  const goToAddWorkouts = () => {
     navigation.navigate('AddWorkoutScreen')
   }
 
@@ -21,7 +21,7 @@ const WorkoutScreen = ({ navigation }) => {
       const workoutsResponse = await AsyncStorage.getItem("workouts");
 
       if (workoutsResponse) {
-        const workoutsObject = JSON.parse(workoutsResponse);;
+        const workoutsObject = JSON.parse(workoutsResponse);
         setWorkouts(workoutsObject); 
       }
     } catch (error) {
@@ -36,7 +36,7 @@ const WorkoutScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <UISectionAddButton
-        addFunction={handleAddWorkouts}
+        addFunction={goToAddWorkouts}
       />
       <UIFlatlist
         itens={workouts}

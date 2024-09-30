@@ -11,10 +11,14 @@ import HomeScreen from './components/home';
 import WorkoutScreen from './components/workout';
 import AddMeasurementScreen from './components/addMeasurement';
 import AddWorkoutScreen from './components/addWorkout'
-import { initializeDatabase } from './database/database'; 
+import { initializeDatabase } from './database/database';
+import SelectMoviments from './components/selectMoviments';
+import ListWorkoutMoviments from './components/listWorkoutMoviments';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+export const ListWorkoutMovimentsContext = React.createContext([])
 
 function MainTabs() {
   return (
@@ -50,20 +54,28 @@ function MainTabs() {
 }
 
 export default function App() {
+  const [ listWorkoutMoviments, setListWorkoutMoviments ] = React.useState([])
+
   // Usando useEffect para garantir que as tabelas sejam criadas ao carregar o app
   React.useEffect(() => {
     initializeDatabase(); // Função para inicializar o banco de dados
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="MainTabs" component={MainTabs} />
-        <Stack.Screen name="AddMeasurement" component={AddMeasurementScreen} />
-        <Stack.Screen name="AddWorkoutScreen" component={AddWorkoutScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ListWorkoutMovimentsContext.Provider
+      value={{ listWorkoutMoviments, setListWorkoutMoviments }}
+    >
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="MainTabs" component={MainTabs} />
+          <Stack.Screen name="AddMeasurement" component={AddMeasurementScreen} />
+          <Stack.Screen name="AddWorkoutScreen" component={AddWorkoutScreen} />
+          <Stack.Screen name="SelectMoviments" component={SelectMoviments} />      
+          <Stack.Screen name="ListWorkoutMoviments" component={ListWorkoutMoviments} />      
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ListWorkoutMovimentsContext.Provider>
   );
 }

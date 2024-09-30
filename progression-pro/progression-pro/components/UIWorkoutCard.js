@@ -5,11 +5,13 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const UIWorkoutCard = ({ item }) => {
+  const navigation = useNavigation()
 
   return (
-    <Pressable onPress={() => Alert.alert('pressable')}>
+    <Pressable onPress={() => navigation.navigate('ListWorkoutMoviments') }>
       <View style={styles.card}>
         <Text style={styles.cardText}>{item.explicacao}</Text>
       </View>

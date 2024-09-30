@@ -253,6 +253,7 @@ export const insertWorkout = async (user_id, explicacao) => {
   workouts.push(newWorkout);
   await setItem("workouts", workouts);
   console.log("Treino inserido com sucesso!");
+  return newWorkout
 };
 
 // Função para inserir um movimento em um treino
@@ -276,6 +277,7 @@ export const insertWorkoutMovement = async (
   workoutMovements.push(newWorkoutMovement);
   await setItem("workout_movements", workoutMovements);
   console.log("Movimento adicionado ao treino com sucesso!");
+  return newWorkoutMovement
 };
 
 // Função para inicializar o banco de dados
@@ -285,5 +287,4 @@ export const initializeDatabase = async () => {
   await createMovementsTable();
   await createWorkoutsTable();
   await createWorkoutMovementsTable();
-  // await insertWorkout(1, 'Treino de peito')
 };

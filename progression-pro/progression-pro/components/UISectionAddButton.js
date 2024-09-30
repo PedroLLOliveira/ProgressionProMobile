@@ -12,7 +12,7 @@ const UISectionAddButton = ({ addFunction }) => {
       <TouchableOpacity onPress={addFunction}>
         <AntDesign  
           name="pluscircle" 
-          size={24} 
+          size={28} 
           // color="#3498db"
           color='blue'
         />
