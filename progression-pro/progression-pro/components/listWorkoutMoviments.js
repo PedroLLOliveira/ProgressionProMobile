@@ -1,32 +1,32 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import { 
   View, 
   StyleSheet,
+  Text,
   Alert,
 } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UIFlatlist from "./UIFlatList";
-import { moviments } from '../database/moviments'
 
 const RenderCardComponent = ({ item }) => {
-  return(
+  return (
     <View style={styles.containerDC}>
-      {/* <Text style={styles.measurementTitle}>{item.}</Text>
-      <Text style={styles.measurementSubTitle}>Densidade Corporal</Text> */}
+      <Text style={styles.measurementTitle}>{item.nome}</Text>
+      <Text style={styles.measurementSubTitle}>Grupo: {item.grupo}</Text>
+      <Text>Repetições: {item.repeticoes}</Text>
+      <Text>Explicação: {item.explicacao}</Text>
     </View>
-  )
-}
+  );
+};
 
 const ListWorkoutMoviments = ({ navigation }) => {
-  const [workoutMoviments, setWorkoutMoviments] = useState([])
-  const [workouts, setWorkouts] = useState([])
-  const [moviments, setMoviments] = useState([])
+  const [workoutMoviments, setWorkoutMoviments] = useState([]);
+  const [joinedData, setJoinedData] = useState([]);
 
+  // Função para buscar os movimentos dos treinos
   const fecthWorkoutMoviments = async () => {
     try {
       const workoutMovimentsResponse = await AsyncStorage.getItem("workout_movements"); 
-      // console.log(workoutMovimentsResponse)
-
       if (workoutMovimentsResponse) {
         const workoutMovimentsObject = JSON.parse(workoutMovimentsResponse); 
         setWorkoutMoviments(workoutMovimentsObject); 
@@ -34,61 +34,55 @@ const ListWorkoutMoviments = ({ navigation }) => {
     } catch (error) {
       Alert.alert("Erro", "Não foi possível carregar os movimentos deste treino");
     }
-  } 
+  };
 
-  const fecthWorkouts = async () => {
-    try {
-      const workoutsResponse = await AsyncStorage.getItem("workouts"); 
-      // console.log(workoutsResponse)
-
-      if (workoutsResponse) {
-        const workoutsObject = JSON.parse(workoutsResponse); 
-        setWorkouts(workoutsObject); 
-      }
-
-    } catch (error) {
-      Alert.alert("Erro", "Não foi possível carregar os movimentos deste treino");
-    }
-  }
-
-  const joinWorkoutsMoviments = () => {
-    setMoviments(moviments)
-
-    const filterMoviments = workoutMoviments
-    .filter(workoutMoviment => {
-      return !moviments.some(moviment => moviment.id === workoutMoviment.movement_id)
-    })
-    .map(workoutMoviment => {
-      const matchedMoviment = moviments.find(moviment => moviment.id === workoutMoviment.movement_id)
+  // Função que realiza o "join" entre os movimentos e o treino
+  const joinWorkoutsMoviments = async () => {
+    const movimentsResponse = await AsyncStorage.getItem('movements')
+    console.log(movimentsResponse);
+    
+    const moviments = JSON.parse(movimentsResponse)
+    const joinedMoviments = workoutMoviments.map(workoutMoviment => {
+      const matchedMoviment = moviments.find(moviment => moviment.id === workoutMoviment.movement_id);
       return {
         ...workoutMoviment,
-        nome: matchedMoviment ? matchedMoviment.nome : null,
-        grupo: matchedMoviment ? matchedMoviment.grupo : null,
-        explicacao: matchedMoviment ? matchedMoviment.explicacao : null,
+        nome: matchedMoviment ? matchedMoviment.nome : 'Movimento não encontrado',
+        grupo: matchedMoviment ? matchedMoviment.grupo : 'Desconhecido',
+        explicacao: matchedMoviment ? matchedMoviment.explicacao : 'Sem explicação',
         link_imagem: matchedMoviment ? matchedMoviment.link_imagem : null
-      }
-    })
+      };
+    });
 
-    console.log(filterMoviments)
-  }
+    setJoinedData(joinedMoviments); // Armazena o resultado da junção
+  };
 
   useEffect(() => {
-    fecthWorkoutMoviments()
-    fecthWorkouts()
-    joinWorkoutsMoviments()
-  },[])
+    // Primeiro, busca os dados dos movimentos dos treinos
+    const fetchData = async () => {
+      await fecthWorkoutMoviments();
+    };
+
+    fetchData();
+  }, []);
+
+  // Sempre que workoutMoviments mudar, faça a junção
+  useEffect(() => {
+    if (workoutMoviments.length > 0) {
+      joinWorkoutsMoviments();
+    }
+  }, [workoutMoviments]);
 
   return (
     <View>
       <UIFlatlist
-        itens={workoutMoviments}
-        notFoundLabel='Nenhum movimento cadastrado'
-        identifyKey='id'
+        itens={joinedData} // Usa os dados já "joinados"
+        notFoundLabel="Nenhum movimento cadastrado"
+        identifyKey="id"
         RenderCardComponent={RenderCardComponent}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   containerDC: {
@@ -102,20 +96,16 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
     marginBottom: 20,
+    marginTop: 50
   },
-  densidadeTable: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 25,
-    backgroundColor: "#f9f9f9",
-    borderRadius: 10,
-    padding: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
+  measurementTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-})
+  measurementSubTitle: {
+    fontSize: 16,
+    color: 'gray',
+  },
+});
 
-export default ListWorkoutMoviments
+export default ListWorkoutMoviments;
