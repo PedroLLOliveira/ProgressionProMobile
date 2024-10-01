@@ -3,7 +3,7 @@ import {
   View, 
   StyleSheet,
 } from 'react-native';
-import moviments from '../database/moviments';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import UIFlatlist from './UIFlatList';
 import UISearchInput from './UISearchInput';
 import UISelectMovimentsCard from './UISelectMovimentsCard';
@@ -12,7 +12,19 @@ const SelectMoviments = ({ navigation }) => {
   const [movimentsData, setMovimentsData] = useState()
 
   useEffect(() => {
-    setMovimentsData(moviments)
+    const fetchMoviments = async () => {
+      try {
+        const moviments = await AsyncStorage.getItem('movements');
+        if(moviments) {
+          const moviemntsObject = JSON.parse(moviments);
+          const movimentsData = moviemntsObject[0];
+          setMovimentsData(movimentsData);
+        }
+      } catch(error) {
+        Alert.alert("Erro", "Não foi possível carregar os movimentos.");
+      }
+    }
+    fetchMoviments()
   }, [])
 
   return(

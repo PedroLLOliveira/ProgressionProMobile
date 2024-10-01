@@ -72,10 +72,10 @@ const AddMeasurementScreen = ({ route, navigation }) => {
 
     // adicionar validação para feiminio e masculino, adicionar sexo e idade por props vindo do profile do usuario, adicionar sexo ao objeto do
     const densidadeCorporal =
-      1.097 -
-      0.00046971 * somaDobras +
-      0.00000056 * somaDobras ** 2 -
-      0.00012828 * 26;
+      1.112 -
+      0.00043499 * somaDobras +
+      0.00000055 * somaDobras ** 2 -
+      0.00028826 * 20;
     const percentualGordura = 495 / densidadeCorporal - 450;
     console.log(densidadeCorporal);
 
@@ -248,10 +248,11 @@ const AddMeasurementScreen = ({ route, navigation }) => {
               />
             </View>
           </View>
+          <View style={styles.divide}></View>
           <Text style={styles.stepSubTitle}>MEDIDAS</Text>
           <View style={styles.tableContainer}>
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Peso</Text>
+              <Text style={styles.labelImput}>Peso</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -264,7 +265,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Altura</Text>
+              <Text style={styles.labelImput}>Altura</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -276,7 +277,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
               />
             </View>
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Meta Gordura</Text>
+              <Text style={styles.labelImput}>Meta Gordura</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -288,10 +289,11 @@ const AddMeasurementScreen = ({ route, navigation }) => {
               />
             </View>
           </View>
+          <View style={styles.divide}></View>
           <Text style={styles.stepSubTitle}>DOBRAS CUTÂNEAS(EM MM)</Text>
           <View style={styles.tableContainer}>
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Subescapular</Text>
+              <Text style={styles.labelImput}>Subescapular</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -304,7 +306,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Tricipital</Text>
+              <Text style={styles.labelImput}>Tricipital</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -317,7 +319,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Peitoral</Text>
+              <Text style={styles.labelImput}>Peitoral</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -330,7 +332,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Axilar-média</Text>
+              <Text style={styles.labelImput}>Axilar-média</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -343,7 +345,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Supra-ilíaca</Text>
+              <Text style={styles.labelImput}>Supra-ilíaca</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -356,7 +358,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Abdominal</Text>
+              <Text style={styles.labelImput}>Abdominal</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -369,7 +371,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.stepSubTitle}>Coxa</Text>
+              <Text style={styles.labelImput}>Coxa</Text>
               <TextInput
                 style={styles.input}
                 placeholder=""
@@ -382,19 +384,25 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
           </View>
 
+          <View style={styles.divide}></View>
           <Text style={styles.stepSubTitle}>RESULTADOS</Text>
           <View style={styles.resultContainer}>
             <View style={styles.column}>
-              <Text>Gordura Ideal: {gordura_ideal}%</Text>
-              <Text>Gordura Atual: {gordura_atual}%</Text>
-              <Text>Peso Magro: {peso_magro} kg</Text>
-              <Text>IMC: {imc}</Text>
+              <Text style={styles.textColumn}>
+                Gordura Ideal: {gordura_ideal}%
+              </Text>
+              <Text style={styles.textColumn}>
+                Gordura Atual: {gordura_atual}%
+              </Text>
+              <Text style={styles.textColumn}>Peso Magro: {peso_magro} kg</Text>
+              <Text style={styles.textColumn}>IMC: {imc}</Text>
             </View>
             <View style={styles.column}>
-              <Text>Peso Gordo: {peso_gordo} kg</Text>
-              <Text>Peso Ideal: {peso_ideal} kg</Text>
+              <Text style={styles.textColumn}>Peso Gordo: {peso_gordo} kg</Text>
+              <Text style={styles.textColumn}>Peso Ideal: {peso_ideal} kg</Text>
             </View>
           </View>
+          <View style={styles.divide}></View>
 
           <Text style={styles.stepSubTitle}>TABELA % GORDURA IDEAL</Text>
           <View style={styles.tableContainer}>
@@ -424,39 +432,30 @@ const AddMeasurementScreen = ({ route, navigation }) => {
               <Text style={styles.labelColumn}>26%</Text>
             </View>
           </View>
+          <View style={styles.divide}></View>
 
           <Text style={styles.stepSubTitle}>TABELA IMC</Text>
           <View style={styles.tableContainer}>
             {/* Cabeçalhos das colunas */}
             <View style={styles.row}>
-              <View>
-                <Text style={styles.labelColumn}>Baixo:</Text>
-                <Text style={styles.labelColumn}> -=18.5</Text>
-              </View>
-              <View>
-                <Text style={styles.labelColumn}>Obes. Leve:</Text>
-                <Text style={styles.labelColumn}> 30 a 34.9</Text>
-              </View>
+              <Text style={styles.labelColumn}>Baixo:</Text>
+              <Text style={styles.labelColumn}> -=18.5</Text>
+
+              <Text style={styles.labelColumn}>Obes. Leve:</Text>
+              <Text style={styles.labelColumn}> 30 a 34.9</Text>
             </View>
             <View style={styles.row}>
-              <View>
-                <Text style={styles.labelColumn}>Ideal:</Text>
-                <Text style={styles.labelColumn}> 18.5 a 24.9</Text>
-              </View>
-              <View>
-                <Text style={styles.labelColumn}>Obes. Moderada:</Text>
-                <Text style={styles.labelColumn}> 35 a 39.9</Text>
-              </View>
+              <Text style={styles.labelColumn}>Ideal:</Text>
+              <Text style={styles.labelColumn}> 18.5 a 24.9</Text>
+
+              <Text style={styles.labelColumn}>Obes. Moderada:</Text>
+              <Text style={styles.labelColumn}> 35 a 39.9</Text>
             </View>
             <View style={styles.row}>
-              <View>
-                <Text style={styles.labelColumn}>Sobrepeso:</Text>
-                <Text style={styles.labelColumn}> 25 a 29.9</Text>
-              </View>
-              <View>
-                <Text style={styles.labelColumn}>Obes. Mórbida:</Text>
-                <Text style={styles.labelColumn}> +40</Text>
-              </View>
+              <Text style={styles.labelColumn}>Sobrepeso:</Text>
+              <Text style={styles.labelColumn}> 25 a 29.9</Text>
+              <Text style={styles.labelColumn}>Obes. Mórbida:</Text>
+              <Text style={styles.labelColumn}> +40</Text>
             </View>
           </View>
 
@@ -473,15 +472,15 @@ const AddMeasurementScreen = ({ route, navigation }) => {
           <View style={styles.tableContainer}>
             {/* Cabeçalhos das colunas */}
             <View style={styles.row}>
-              <Text style={styles.labelColumn}> </Text>
+              <Text style={styles.labelImput}> </Text>
               {/* Espaço vazio na legenda para o cabeçalho */}
-              <Text style={styles.labelColumn}>Esquerdo</Text>
-              <Text style={styles.labelColumn}>Direito</Text>
+              <Text style={styles.labelImput}>Esquerdo</Text>
+              <Text style={styles.labelImput}>Direito</Text>
             </View>
 
             {/* Linhas de inputs com legenda */}
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Antebraço</Text>
+              <Text style={styles.labelImput}>Antebraço</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -503,7 +502,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Bíceps Relaxado</Text>
+              <Text style={styles.labelImput}>Bíceps Relaxado</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -525,7 +524,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Bíceps Contraido</Text>
+              <Text style={styles.labelImput}>Bíceps Contraido</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -547,7 +546,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Coxa Proximal</Text>
+              <Text style={styles.labelImput}>Coxa Proximal</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -569,7 +568,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Coxa Medial</Text>
+              <Text style={styles.labelImput}>Coxa Medial</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -591,7 +590,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Coxa Distal</Text>
+              <Text style={styles.labelImput}>Coxa Distal</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -613,7 +612,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Panturrilha</Text>
+              <Text style={styles.labelImput}>Panturrilha</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -647,7 +646,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
           <Text style={styles.stepTitle}>Etapa 3</Text>
           <View style={styles.tableContainer}>
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Abdômen</Text>
+              <Text style={styles.labelImput}>Abdômen</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -657,7 +656,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
                   setAbdomen(text);
                 }}
               />
-              <Text style={styles.labelColumn}>Quadril</Text>
+              <Text style={styles.labelImput}>Quadril</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -669,7 +668,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
               />
             </View>
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Cintura</Text>
+              <Text style={styles.labelImput}>Cintura</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -679,7 +678,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
                   setCintura(text);
                 }}
               />
-              <Text style={styles.labelColumn}>Tórax</Text>
+              <Text style={styles.labelImput}>Tórax</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -691,7 +690,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
               />
             </View>
             <View style={styles.row}>
-              <Text style={styles.labelColumn}>Ombro</Text>
+              <Text style={styles.labelImput}>Ombro</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -701,7 +700,7 @@ const AddMeasurementScreen = ({ route, navigation }) => {
                   setOmbro(text);
                 }}
               />
-              <Text style={styles.labelColumn}>Pescoço</Text>
+              <Text style={styles.labelImput}>Pescoço</Text>
               <TextInput
                 style={styles.inputColumn}
                 placeholder=""
@@ -720,7 +719,6 @@ const AddMeasurementScreen = ({ route, navigation }) => {
           </View>
         </View>
       )}
-
     </ScrollView>
   );
 };
@@ -734,9 +732,16 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     flex: 1,
-    justifyContent: "start",
-    marginTop: 60,
-    alignItems: "center",
+    padding: 20,
+    marginTop: 50,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    marginBottom: 20,
   },
   stepTitle: {
     fontSize: 24,
@@ -746,12 +751,36 @@ const styles = StyleSheet.create({
   },
   stepSubTitle: {
     fontSize: 16,
-    marginBottom: 20,
+    fontWeight: "bold",
+    color: "#1a1a1a",
+    marginBottom: 25,
+    marginTop: 15,
+    textAlign: "center",
+  },
+  labelImput: {
+    fontSize: 13,
+    fontWeight: "bold",
+    color: "#1a1a1a",
+    marginBottom: 15,
+    marginTop: 15,
+    textAlign: "center",
+  },
+  divide: {
+    backgroundColor: "#000",
+    width: "100%",
+    height: 1,
   },
   resultContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 20,
+  },
+  textColumn: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#444",
+    marginBottom: 8,
+    textAlign: "left",
   },
   resultRow: {
     flexDirection: "row",
@@ -792,7 +821,8 @@ const styles = StyleSheet.create({
   },
   labelColumn: {
     flex: 1, // Ajusta o espaço da coluna de legenda
-    fontSize: 13,
+    fontSize: 10,
+    textAlign: "center",
   },
   inputColumn: {
     flex: 1, // Ajusta o espaço das colunas de input

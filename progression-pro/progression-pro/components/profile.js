@@ -9,7 +9,6 @@ import {
   Alert,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { getItem } from "../database/database"; // Função para buscar dados
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreen = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
