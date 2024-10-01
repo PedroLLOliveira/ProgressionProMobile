@@ -34,12 +34,14 @@ const SelectMoviments = ({ navigation }) => {
           placeholder='Pesquise o movimento'
         />
       </View>
-      <UIFlatlist
-        itens={movimentsData}
-        notFoundLabel='Nenhum movimento cadastrado.'
-        identifyKey='id'
-        RenderCardComponent={UISelectMovimentsCard}
-      />
+      <View style={{ marginBottom: 80 }}>
+        <UIFlatlist
+          itens={movimentsData}
+          notFoundLabel='Nenhum movimento cadastrado.'
+          identifyKey='id'
+          RenderCardComponent={UISelectMovimentsCard}
+        />
+      </View>
     </View>
   )
 }
