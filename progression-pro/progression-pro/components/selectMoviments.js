@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import { 
   View, 
   StyleSheet,
+  Alert
 } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UIFlatlist from './UIFlatList';
@@ -17,8 +18,7 @@ const SelectMoviments = ({ navigation }) => {
         const moviments = await AsyncStorage.getItem('movements');
         if(moviments) {
           const moviemntsObject = JSON.parse(moviments);
-          const movimentsData = moviemntsObject[0];
-          setMovimentsData(movimentsData);
+          setMovimentsData(moviemntsObject);
         }
       } catch(error) {
         Alert.alert("Erro", "Não foi possível carregar os movimentos.");

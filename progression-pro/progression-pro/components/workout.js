@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
     View,
     Alert,
     StyleSheet,
   } from 'react-native';
+  import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UIFlatlist from './UIFlatList';
 import UISectionAddButton from './UISectionAddButton';
@@ -29,9 +30,11 @@ const WorkoutScreen = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    fetchWorkoutsData()
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      fetchWorkoutsData();
+    }, [])
+  );
 
   return (
     <View style={styles.screen}>

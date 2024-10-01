@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { v4 as uuidv4 } from "uuid";
+import moviments from "./moviments";
 
 // Função para salvar um item no AsyncStorage
 const setItem = async (key, value) => {
@@ -226,10 +227,10 @@ export const createWorkoutMovementsTable = async () => {
 };
 
 // Função para inserir um movimento
-export const insertMovement = async (nome, grupo, explicacao, link_imagem) => {
+export const insertMovement = async (id, nome, grupo, explicacao, link_imagem) => {
   const movements = await getItem("movements");
   const newMovement = {
-    id: movements.length + 1,
+    id,
     nome,
     grupo,
     explicacao,
@@ -240,6 +241,12 @@ export const insertMovement = async (nome, grupo, explicacao, link_imagem) => {
   await setItem("movements", movements);
   console.log("Movimento inserido com sucesso!");
 };
+
+const insertInitialMoviments = async () => {
+  const initialMoviments = moviments
+  await setItem("movements", initialMoviments);
+}
+
 
 // Função para inserir um treino
 export const insertWorkout = async (user_id, explicacao) => {
@@ -287,4 +294,5 @@ export const initializeDatabase = async () => {
   await createMovementsTable();
   await createWorkoutsTable();
   await createWorkoutMovementsTable();
+  insertInitialMoviments()
 };
