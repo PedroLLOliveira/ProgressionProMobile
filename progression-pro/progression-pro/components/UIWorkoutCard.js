@@ -11,7 +11,7 @@ const UIWorkoutCard = ({ item }) => {
   const navigation = useNavigation()
 
   return (
-    <Pressable onPress={() => navigation.navigate('ListWorkoutMoviments') }>
+    <Pressable onPress={() => navigation.navigate('ListWorkoutMoviments', { workoutId: item.id }) }>
       <View style={styles.card}>
         <Text style={styles.cardText}>{item.explicacao}</Text>
       </View>
