@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import UIFlatlist from './UIFlatList';
 import UISearchInput from './UISearchInput';
 import UISelectMovimentsCard from './UISelectMovimentsCard';
+import UIFormButtons from './UIFormButtons';
 
 const SelectMoviments = ({ navigation }) => {
   const [movimentsData, setMovimentsData] = useState()
@@ -34,6 +35,7 @@ const SelectMoviments = ({ navigation }) => {
           placeholder='Pesquise o movimento'
         />
       </View>
+
       <View style={{ marginBottom: 80 }}>
         <UIFlatlist
           itens={movimentsData}
@@ -42,6 +44,16 @@ const SelectMoviments = ({ navigation }) => {
           RenderCardComponent={UISelectMovimentsCard}
         />
       </View>
+
+      <UIFormButtons
+        submitLabel={'Finalizar'}
+        height={60}
+        width={170}
+        functionCancel={ () => console.log('teste') }
+        functionSubmit={ () => console.log('teste') }
+      />
+
+      {/* TODO: os botões não apareceram, verificar que porra é essa */}
     </View>
   )
 }
