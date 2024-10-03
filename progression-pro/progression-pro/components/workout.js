@@ -41,12 +41,14 @@ const WorkoutScreen = ({ navigation }) => {
       <UISectionAddButton
         addFunction={goToAddWorkouts}
       />
-      <UIFlatlist
-        itens={workouts}
-        notFoundLabel='Nenhum treino cadastrado.'
-        identifyKey='id'
-        RenderCardComponent={UIWorkoutCard}
-      />
+      <View style={{ marginBottom: 100 }}>
+        <UIFlatlist
+          itens={workouts}
+          notFoundLabel='Nenhum treino cadastrado.'
+          identifyKey='id'
+          RenderCardComponent={UIWorkoutCard}
+        />
+      </View>
     </View>
   );
 };
