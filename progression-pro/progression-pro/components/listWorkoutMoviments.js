@@ -39,7 +39,6 @@ const ListWorkoutMoviments = ({ navigation }) => {
   // Função que realiza o "join" entre os movimentos e o treino
   const joinWorkoutsMoviments = async () => {
     const movimentsResponse = await AsyncStorage.getItem('movements')
-    console.log(movimentsResponse);
     
     const moviments = JSON.parse(movimentsResponse)
     const joinedMoviments = workoutMoviments.map(workoutMoviment => {

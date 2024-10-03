@@ -23,7 +23,6 @@ const ProfileScreen = ({ navigation }) => {
     const fetchUserData = async () => {
       try {
         const user = await AsyncStorage.getItem("users"); // Busca os dados do usuário do banco
-        console.log(user);
 
         if (user) {
           const userObject = JSON.parse(user); // Desserializa a string JSON
@@ -42,7 +41,6 @@ const ProfileScreen = ({ navigation }) => {
         if (measurement && measurement.length > 0) {
           const last = measurement[measurement.length - 1]; // Pega a última medição
           setLastMeasurement(last);
-          console.log(measurement);
         } else {
           setLastMeasurement(null); // Nenhuma medição encontrada
         }
