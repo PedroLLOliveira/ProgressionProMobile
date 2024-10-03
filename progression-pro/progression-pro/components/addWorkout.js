@@ -10,7 +10,7 @@ import UIFormButtons from './UIFormButtons';
 import { insertWorkout, insertWorkoutMovement } from '../database/database';
 
 const AddWorkoutScreen = ({ navigation }) => {
-  const { listWorkoutMoviments } = useContext(ListWorkoutMovimentsContext)
+  const { listWorkoutMoviments, setListWorkoutMoviments } = useContext(ListWorkoutMovimentsContext)
   const [ workoutTitle, setWorkoutTitle ] = useState('')
 
   const goToSelectMoviments = () => {
@@ -33,6 +33,8 @@ const AddWorkoutScreen = ({ navigation }) => {
         moviment.timeBreak,
       )
     })
+
+    setListWorkoutMoviments([])
     goToBack()
   }
 
