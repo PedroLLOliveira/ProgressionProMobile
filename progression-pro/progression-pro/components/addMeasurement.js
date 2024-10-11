@@ -41,6 +41,8 @@ const AddMeasurementScreen = ({ route, navigation }) => {
   const [imc, setImc] = useState("");
   const [antebraco_direito, setAntebracoDireito] = useState("");
   const [antebraco_esquerdo, setAntebracoEsquerdo] = useState("");
+  const [punho_direito, setPunhoDireito] = useState("");
+  const [punho_esquerdo, setPunhoEsquerdo] = useState("");
   const [biceps_relaxado_direito, setBracoRelaxadoDireito] = useState("");
   const [biceps_relaxado_esquerdo, setBracoRelaxadoEsquerdo] = useState("");
   const [biceps_contraido_direito, setBracoContraidoDireito] = useState("");
@@ -56,7 +58,9 @@ const AddMeasurementScreen = ({ route, navigation }) => {
   const [abdomen, setAbdomen] = useState("");
   const [cintura, setCintura] = useState("");
   const [quadril, setQuadril] = useState("");
-  const [torax, setTorax] = useState("");
+  const [torax_normal, setToraxNormal] = useState("");
+  const [torax_inspirado, setToraxInspirado] = useState("");
+  const [torax_expirado, setToraxExpirado] = useState("");
   const [ombro, setOmbro] = useState("");
   const [pescoco, setPescoco] = useState("");
 
@@ -171,6 +175,8 @@ const AddMeasurementScreen = ({ route, navigation }) => {
         imc,
         antebraco_direito,
         antebraco_esquerdo,
+        punho_direito,
+        punho_esquerdo,
         biceps_relaxado_direito,
         biceps_relaxado_esquerdo,
         biceps_contraido_direito,
@@ -186,7 +192,9 @@ const AddMeasurementScreen = ({ route, navigation }) => {
         abdomen,
         cintura,
         quadril,
-        torax,
+        torax_normal,
+        torax_inspirado,
+        torax_expirado,
         ombro,
         pescoco
       );
@@ -468,6 +476,116 @@ const AddMeasurementScreen = ({ route, navigation }) => {
       {step === 2 && (
         <View style={styles.stepContainer}>
           <Text style={styles.stepTitle}>Etapa 2</Text>
+          <View style={styles.tableContainer}>
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Tórax Normal</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={torax_normal}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setToraxNormal(text);
+                }}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Tórax Inspirado</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={torax_inspirado}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setToraxInspirado(text);
+                }}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Tórax Expirado</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={torax_expirado}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setToraxExpirado(text);
+                }}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Abdômen</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={abdomen}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setAbdomen(text);
+                }}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Quadril</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={quadril}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setQuadril(text);
+                }}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Cintura</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={cintura}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setCintura(text);
+                }}
+              />
+            </View>
+
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Ombro</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={ombro}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setOmbro(text);
+                }}
+              />
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Pescoço</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={pescoco}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setPescoco(text);
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <Button title="Anterior" onPress={handlePreviousStep} />
+            <Button title="Próximo" onPress={handleNextStep} />
+          </View>
+        </View>
+      )}
+
+      {step === 3 && (
+        <View style={styles.stepContainer}>
+          <Text style={styles.stepTitle}>Etapa 3</Text>
 
           <View style={styles.tableContainer}>
             {/* Cabeçalhos das colunas */}
@@ -479,28 +597,6 @@ const AddMeasurementScreen = ({ route, navigation }) => {
             </View>
 
             {/* Linhas de inputs com legenda */}
-            <View style={styles.row}>
-              <Text style={styles.labelImput}>Antebraço</Text>
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={antebraco_esquerdo}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setAntebracoEsquerdo(text);
-                }}
-              />
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={antebraco_direito}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setAntebracoDireito(text);
-                }}
-              />
-            </View>
-
             <View style={styles.row}>
               <Text style={styles.labelImput}>Bíceps Relaxado</Text>
               <TextInput
@@ -541,6 +637,50 @@ const AddMeasurementScreen = ({ route, navigation }) => {
                 keyboardType="decimal-pad"
                 onChangeText={(text) => {
                   setBracoContraidoDireito(text);
+                }}
+              />
+            </View>
+
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Antebraço</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={antebraco_esquerdo}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setAntebracoEsquerdo(text);
+                }}
+              />
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={antebraco_direito}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setAntebracoDireito(text);
+                }}
+              />
+            </View>
+
+            <View style={styles.row}>
+              <Text style={styles.labelImput}>Punho</Text>
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={punho_esquerdo}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setPunhoEsquerdo(text);
+                }}
+              />
+              <TextInput
+                style={styles.inputColumn}
+                placeholder=""
+                value={punho_direito}
+                keyboardType="decimal-pad"
+                onChangeText={(text) => {
+                  setPunhoDireito(text);
                 }}
               />
             </View>
@@ -629,85 +769,6 @@ const AddMeasurementScreen = ({ route, navigation }) => {
                 keyboardType="decimal-pad"
                 onChangeText={(text) => {
                   setPanturrilhaDireita(text);
-                }}
-              />
-            </View>
-          </View>
-
-          <View style={styles.buttonContainer}>
-            <Button title="Anterior" onPress={handlePreviousStep} />
-            <Button title="Próximo" onPress={handleNextStep} />
-          </View>
-        </View>
-      )}
-
-      {step === 3 && (
-        <View style={styles.stepContainer}>
-          <Text style={styles.stepTitle}>Etapa 3</Text>
-          <View style={styles.tableContainer}>
-            <View style={styles.row}>
-              <Text style={styles.labelImput}>Abdômen</Text>
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={abdomen}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setAbdomen(text);
-                }}
-              />
-              <Text style={styles.labelImput}>Quadril</Text>
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={quadril}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setQuadril(text);
-                }}
-              />
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.labelImput}>Cintura</Text>
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={cintura}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setCintura(text);
-                }}
-              />
-              <Text style={styles.labelImput}>Tórax</Text>
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={torax}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setTorax(text);
-                }}
-              />
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.labelImput}>Ombro</Text>
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={ombro}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setOmbro(text);
-                }}
-              />
-              <Text style={styles.labelImput}>Pescoço</Text>
-              <TextInput
-                style={styles.inputColumn}
-                placeholder=""
-                value={pescoco}
-                keyboardType="decimal-pad"
-                onChangeText={(text) => {
-                  setPescoco(text);
                 }}
               />
             </View>

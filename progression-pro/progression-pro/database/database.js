@@ -74,6 +74,8 @@ export const insertPhysicalMeasurement = async (
   imc,
   antebraco_direito,
   antebraco_esquerdo,
+  punho_direito,
+  punho_esquerdo,
   biceps_relaxado_direito,
   biceps_relaxado_esquerdo,
   biceps_contraido_direito,
@@ -89,7 +91,9 @@ export const insertPhysicalMeasurement = async (
   abdomen,
   cintura,
   quadril,
-  torax,
+  torax_normal,
+  torax_inspirado,
+  torax_expirado,
   ombro,
   pescoco
 ) => {
@@ -116,6 +120,8 @@ export const insertPhysicalMeasurement = async (
     imc,
     antebraco_direito,
     antebraco_esquerdo,
+    punho_direito,
+    punho_esquerdo,
     biceps_relaxado_direito,
     biceps_relaxado_esquerdo,
     biceps_contraido_direito,
@@ -131,7 +137,9 @@ export const insertPhysicalMeasurement = async (
     abdomen,
     cintura,
     quadril,
-    torax,
+    torax_normal,
+    torax_inspirado,
+    torax_expirado,
     ombro,
     pescoco,
   };
@@ -227,7 +235,13 @@ export const createWorkoutMovementsTable = async () => {
 };
 
 // Função para inserir um movimento
-export const insertMovement = async (id, nome, grupo, explicacao, link_imagem) => {
+export const insertMovement = async (
+  id,
+  nome,
+  grupo,
+  explicacao,
+  link_imagem
+) => {
   const movements = await getItem("movements");
   const newMovement = {
     id,
@@ -243,10 +257,9 @@ export const insertMovement = async (id, nome, grupo, explicacao, link_imagem) =
 };
 
 const insertInitialMoviments = async () => {
-  const initialMoviments = moviments
+  const initialMoviments = moviments;
   await setItem("movements", initialMoviments);
-}
-
+};
 
 // Função para inserir um treino
 export const insertWorkout = async (user_id, explicacao) => {
@@ -260,7 +273,7 @@ export const insertWorkout = async (user_id, explicacao) => {
   workouts.push(newWorkout);
   await setItem("workouts", workouts);
   console.log("Treino inserido com sucesso!");
-  return newWorkout
+  return newWorkout;
 };
 
 // Função para inserir um movimento em um treino
@@ -284,7 +297,7 @@ export const insertWorkoutMovement = async (
   workoutMovements.push(newWorkoutMovement);
   await setItem("workout_movements", workoutMovements);
   console.log("Movimento adicionado ao treino com sucesso!");
-  return newWorkoutMovement
+  return newWorkoutMovement;
 };
 
 // Função para inicializar o banco de dados
@@ -294,5 +307,5 @@ export const initializeDatabase = async () => {
   await createMovementsTable();
   await createWorkoutsTable();
   await createWorkoutMovementsTable();
-  insertInitialMoviments()
+  insertInitialMoviments();
 };

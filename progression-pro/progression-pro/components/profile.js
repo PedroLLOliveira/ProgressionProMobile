@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Button,
   Alert,
 } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreen = ({ navigation }) => {
@@ -16,6 +17,21 @@ const ProfileScreen = ({ navigation }) => {
 
   const handleAddMeasurement = () => {
     navigation.navigate("AddMeasurement");
+  };
+  const fetchLastMeasurement = async () => {
+    try {
+      // Aqui você deve substituir pelo método correto para buscar as medições
+      const response = await AsyncStorage.getItem("physical_measurements");
+      const measurement = JSON.parse(response);
+      if (measurement && measurement.length > 0) {
+        const last = measurement[measurement.length - 1]; // Pega a última medição
+        setLastMeasurement(last);
+      } else {
+        setLastMeasurement(null); // Nenhuma medição encontrada
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível carregar as medições.");
+    }
   };
 
   useEffect(() => {
@@ -33,25 +49,16 @@ const ProfileScreen = ({ navigation }) => {
         Alert.alert("Erro", "Não foi possível carregar os dados do usuário.");
       }
     };
-    const fetchLastMeasurement = async () => {
-      try {
-        // Aqui você deve substituir pelo método correto para buscar as medições
-        const response = await AsyncStorage.getItem("physical_measurements");
-        const measurement = JSON.parse(response);
-        if (measurement && measurement.length > 0) {
-          const last = measurement[measurement.length - 1]; // Pega a última medição
-          setLastMeasurement(last);
-        } else {
-          setLastMeasurement(null); // Nenhuma medição encontrada
-        }
-      } catch (error) {
-        Alert.alert("Erro", "Não foi possível carregar as medições.");
-      }
-    };
 
     fetchUserData(); // Chama a função ao carregar o componente
-    fetchLastMeasurement(); // Chama a função para buscar a última medição
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchLastMeasurement();
+    }, [])
+  );
+
 
   // Exibe um carregamento se os dados do usuário ainda não estiverem prontos
   if (!userData) {
@@ -95,23 +102,24 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={styles.measurementSubTitle}>Densidade Corporal</Text>
             <View style={styles.densidadeTable}>
               <View style={styles.column}>
-                <Text>Gordura Ideal: {lastMeasurement.gordura_ideal}%</Text>
-                <Text>Gordura Atual: {lastMeasurement.gordura_atual}%</Text>
-                <Text>Peso Magro: {lastMeasurement.peso_magro} kg</Text>
-                <Text>IMC: {lastMeasurement.imc}</Text>
+                <Text style={styles.textColumn}>Gordura Ideal: {lastMeasurement.gordura_ideal}%</Text>
+                <Text style={styles.textColumn}>Gordura Atual: {lastMeasurement.gordura_atual}%</Text>
+                <Text style={styles.textColumn}>Peso Magro: {lastMeasurement.peso_magro} kg</Text>
+                <Text style={styles.textColumn}>IMC: {lastMeasurement.imc}</Text>
               </View>
               <View style={styles.column}>
-                <Text>Peso Gordo: {lastMeasurement.peso_gordo} kg</Text>
-                <Text>Peso Ideal: {lastMeasurement.peso_ideal} kg</Text>
+                <Text style={styles.textColumn}>Peso Gordo: {lastMeasurement.peso_gordo} kg</Text>
+                <Text style={styles.textColumn}>Peso Ideal: {lastMeasurement.peso_ideal} kg</Text>
               </View>
             </View>
             <Text style={styles.measurementSubTitle}>Medidas Corporais</Text>
             <View style={styles.densidadeTable}>
               <View style={styles.column}>
                 <Text></Text>
-                <Text style={styles.textColumn}>Antebraco</Text>
                 <Text style={styles.textColumn}>Bíceps Relaxado</Text>
                 <Text style={styles.textColumn}>Bíceps Contraido</Text>
+                <Text style={styles.textColumn}>Antebraco</Text>
+                <Text style={styles.textColumn}>Punho</Text>
                 <Text style={styles.textColumn}>Coxa Proximal</Text>
                 <Text style={styles.textColumn}>Coxa Medial</Text>
                 <Text style={styles.textColumn}>Coxa Distal</Text>
@@ -119,40 +127,48 @@ const ProfileScreen = ({ navigation }) => {
               </View>
               <View style={styles.column}>
                 <Text style={styles.labelColumn}>Esquerdo(cm)</Text>
-                <Text style={styles.textColumnCenter}>{lastMeasurement.antebraco_esquerdo}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.biceps_relaxado_esquerdo}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.biceps_contraido_esquerdo}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.antebraco_esquerdo}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.punho_esquerdo}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.coxa_proximal_esquerda}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.coxa_medial_esquerda}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.coxa_distal_esquerda}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.panturrilha_esquerda}</Text>
               </View>
               <View style={styles.column}>
                 <Text style={styles.labelColumn}>Direito(cm)</Text>
-                <Text style={styles.textColumnCenter}>{lastMeasurement.antebraco_direito}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.biceps_relaxado_direito}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.biceps_contraido_direito}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.antebraco_direito}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.punho_direito}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.coxa_proximal_direita}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.coxa_medial_direita}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.coxa_distal_direita}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.panturrilha_direita}</Text>
               </View>
             </View>
             <Text style={styles.measurementSubTitle}>Circunferências</Text>
             <View style={styles.densidadeTable}>
               <View style={styles.column}>
                 <Text></Text>
+                <Text style={styles.textColumn}>Torax Normal</Text>
+                <Text style={styles.textColumn}>Torax Inspirado</Text>
+                <Text style={styles.textColumn}>Torax Expirado</Text>
                 <Text style={styles.textColumn}>Abdômen</Text>
                 <Text style={styles.textColumn}>Cintura</Text>
                 <Text style={styles.textColumn}>Quadril</Text>
-                <Text style={styles.textColumn}>Torax</Text>
                 <Text style={styles.textColumn}>Ombro</Text>
                 <Text style={styles.textColumn}>Pescoço</Text>
               </View>
               <View style={styles.column}>
                 <Text style={styles.labelColumn}>(cm)</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.torax_normal}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.torax_inspirado}</Text>
+                <Text style={styles.textColumnCenter}>{lastMeasurement.torax_expirado}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.abdomen}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.cintura}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.quadril}</Text>
-                <Text style={styles.textColumnCenter}>{lastMeasurement.torax}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.ombro}</Text>
                 <Text style={styles.textColumnCenter}>{lastMeasurement.pescoco}</Text>
               </View>
@@ -277,19 +293,21 @@ const styles = StyleSheet.create({
   },
   
   textColumn: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "500",
     color: "#444",
     marginBottom: 8,
+    marginTop: 3.5,
     textAlign: "left",
   },
   
   textColumnCenter: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: "500",
     color: "#444",
     textAlign: "center",
-    marginBottom: 8,
+    marginBottom: 7,
+    marginTop: 7,
   },
   
   measurementText: {
